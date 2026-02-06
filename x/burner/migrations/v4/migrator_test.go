@@ -40,16 +40,13 @@ func TestMigrate(t *testing.T) {
 
 	store := prefix.NewStore(ctx.KVStore(storeKey), []byte{})
 
-	// Create mock subspace with default params
-	legacySubspace := newMockSubspace(types.DefaultParams())
+	// Run migration (new signature)
+	require.NoError(t, v2.Migrate(store, cdc))
 
-	// Run migration
-	require.NoError(t, v2.Migrate(ctx, store, legacySubspace, cdc))
-
-	// Verify params were stored correctly
+	// Verify params were stored correctly (should be default v4 params)
 	var res types.Params
 	bz := store.Get(types.ParamsKey)
 	require.NotNil(t, bz, "params should be stored in the new location")
 	require.NoError(t, cdc.Unmarshal(bz, &res))
-	require.Equal(t, legacySubspace.ps, res)
+	require.Equal(t, types.NewParams(4), res)
 }
