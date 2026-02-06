@@ -22,7 +22,8 @@ func TestGenesis(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	acc := testutil.NewMockAccountKeeper(ctrl)
 
-	k, ctx := keepertest.TradebinKeeper(t, nil, acc, nil)
+	kVal, ctx := keepertest.TradebinKeeper(t, nil, acc, nil)
+	k := &kVal
 	tradebin.InitGenesis(ctx, k, genesisState)
 	got := tradebin.ExportGenesis(ctx, k)
 	require.NotNil(t, got)
