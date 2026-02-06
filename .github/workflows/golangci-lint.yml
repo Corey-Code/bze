@@ -5,12 +5,10 @@ on:
   push:
     branches:
       - main
-      - feature/github-workflows
   pull_request:
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   golangci:
