@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   golangci:
@@ -26,4 +27,6 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: latest
+          github-token: ${{ secrets.BZE_LINT_ISSUES_TOKEN }}
           args: --timeout=30m
+          only-new-issues: true
