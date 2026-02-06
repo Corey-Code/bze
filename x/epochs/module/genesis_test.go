@@ -11,15 +11,16 @@ import (
 )
 
 func TestGenesis(t *testing.T) {
-	genesisState := types.GenesisState{}
+		genesisState := types.GenesisState{}
 
-	k, ctx := keepertest.EpochKeeper(t)
-	epoch.InitGenesis(ctx, k, genesisState)
-	got := epoch.ExportGenesis(ctx, k)
-	require.NotNil(t, got)
+		kVal, ctx := keepertest.EpochKeeper(t)
+		k := &kVal
+		epoch.InitGenesis(ctx, k, genesisState)
+		got := epoch.ExportGenesis(ctx, k)
+		require.NotNil(t, got)
 
-	nullify.Fill(&genesisState)
-	nullify.Fill(got)
+		nullify.Fill(&genesisState)
+		nullify.Fill(got)
 
 	// this line is used by starport scaffolding # genesis/test/assert
 }
